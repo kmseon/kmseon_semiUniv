@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+
+    <!--학교 img : 로그인-->
+    <div class="middle">
+        <!--학교 img-->
+        <div class="middleItem">
+            <img src="https://cdn.pixabay.com/photo/2020/02/06/20/01/university-library-4825366_1280.jpg" id="img1">
+        </div>
+        <!--로그인-->
+        <div class="middleItem" >
+        <div class="middleItemLogin" sec:authorize="isAnonymous()">
+            <h4>통합로그인</h4>
+            <form id="frm" th:action="@{/login}" method="post" class="container">
+                <div class="mb3">
+                    <label class="form-label">사용자ID</label>
+                    <input id="username" name="username" type="text" class="form-control">
+                </div>
+                <div class="mb3">
+                    <label class="form-label">비밀번호</label>
+                    <input id="password" name="password" type="password" class="form-control">
+                </div>
+                <input type="submit" value="로그인" class="btn btn-primary" >
+                <input type="button" value="다시" class="btn btn-primary" >
+            </form>
+        </div>
+        <div class="middleItemLogin" sec:authorize="isAuthenticated()">
+            <h4>로그인 성공</h4>
+            <!-- 가져온 회원정보 보여주기 -->
+            <!-- student -->
+            <div sec:authorize="hasRole('STUDENT')">
+            <span th:text="${studentLogin.name}">님 로그인</span>
+            <span class="nav-item">
+                STUDENT 입니다.
+            </span>
+            </div>
+            <!-- professor -->
+            <div sec:authorize="hasRole('PROFESSOR')">
+                <span th:text="${professorLogin.name}">님 로그인</span>
+                <span class="nav-item">
+                PROFESSOR 입니다.
+            </span>
+            </div>
+            <!-- admin -->
+            <div sec:authorize="hasRole('ADMIN')">
+                <span th:text="${adminLogin.name}">님 로그인</span>
+                <span class="nav-item">
+                ADMIN 입니다.
+            </span>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--공지사항 : ???-->
+    <div class="middle">
+        <!--공지사항-->
+        <div class="middleItem">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>목차</th>
+                    <th>제목</th>
+                    <th>내용</th>
+                </tr>
+                </thead>
+                <tbody>
+<!--                <tr th:each=" noticeDto : ${noticeDto}">-->
+<!--                    <td th:text="${noticeDto.id}"></td>-->
+<!--                    <td th:text="${noticeDto.title}"></td>-->
+<!--                    <td th:text="${noticeDto.content}"></td>-->
+<!--                </tr>-->
+                </tbody>
+            </table>
+        </div>
+        <!--???-->
+        <div class="middleItem" >
+            <div >
+                <h4>???</h4>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
